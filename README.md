@@ -7,6 +7,10 @@ git clone - LINK
 Update
 
 git pull - LINK
+
+Optional 
+
+add Python path - export PYTHONPATH=/usr/bin/python
 ________
 
 
