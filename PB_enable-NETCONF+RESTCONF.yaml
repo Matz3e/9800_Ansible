@@ -1,0 +1,29 @@
+---
+
+- hosts: C9800
+
+  gather_facts: no
+
+ 
+
+  tasks:
+
+   - ios_config:
+
+      commands:
+
+       - aaa new-model
+
+       - aaa authorization exec default local
+
+       - aaa authentication login default local
+
+       - username netconf privilege 15 password 0 netconf
+
+       - netconf-yang
+
+       - ip http secure-server
+
+       - restconf
+
+      save_when: modified
