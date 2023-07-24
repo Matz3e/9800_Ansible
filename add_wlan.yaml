@@ -1,0 +1,49 @@
+- hosts: C9800
+
+  gather_facts: no
+
+  connection: netconf
+
+  remote_user: netconf
+
+ 
+
+  tasks:
+
+  - name: establish subscription
+
+    netconf_config:
+
+      content: |
+
+          <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+
+            <wlan-cfg-data xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-wireless-wlan-cfg">
+
+              <wlan-cfg-entries>
+
+                <wlan-cfg-entry>
+
+                  <profile-name>Test</profile-name>
+
+                  <wlan-id>5</wlan-id>
+
+                  <security-wpa>true</security-wpa>
+
+                  <wpa2-enabled>true</wpa2-enabled>
+
+                  <apf-vap-id-data>
+
+                    <broadcast-ssid>true</broadcast-ssid>
+
+                    <ssid>Test-WLAN</ssid>
+
+                  </apf-vap-id-data>
+
+                </wlan-cfg-entry>
+
+              </wlan-cfg-entries>
+
+            </wlan-cfg-data>
+
+          </config>
