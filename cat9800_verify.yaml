@@ -1,0 +1,21 @@
+---
+
+- hosts: C9800
+
+  gather_facts: no
+
+ 
+
+  tasks:
+
+   - ios_command:
+
+      commands:
+
+      - show run | i netconf-yang
+
+      - show run | i restconf
+
+     register: show
+
+   - debug: var=show.stdout_lines
