@@ -1,16 +1,12 @@
-[csr1000v]
-10.1.1.2
- 
-[c9300]
+[C9300]
 10.1.1.5
  
-[c9800]
+[C9800]
 192.168.10.223
 
 [ios:children]
-#csr1000v
-c9300
-#c9800
+C9300
+#C9800
  
 [ios:vars]
 ansible_connection=network_cli
