@@ -17,6 +17,7 @@ ansible --version
 **# Schritt 2: Installieren von Ansible**
 
 Execute Ansible Playbook
+
 ansible-playbook enable_netconf_yang.yaml -u admin -k
 
 -u = Username
