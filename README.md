@@ -12,6 +12,8 @@ ________
 apt install ansible
 ansible --version
 
+
+
 **# Schritt 2: Installieren von Ansible**
 
 Execute Ansible Playbook
