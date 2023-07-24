@@ -1,8 +1,11 @@
 **GIT**
 
 mkdir VERZEICHNISS
+
 git clone - LINK
+
 Update
+
 git pull - LINK
 ________
 
