@@ -1,10 +1,28 @@
-<config>
-    <ap-cfg-data xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-wireless-ap-cfg">
-        <ap-tags>
-            <ap-tag>
-                <ap-mac>11:22:33:44:55:66</ap-mac>
-                <site-tag>Sydney</site-tag>
-            </ap-tag>
-        </ap-tags>
-    </ap-cfg-data>
-</config>
+- hosts: C9800
+
+  gather_facts: no
+
+  connection: netconf
+
+  remote_user: netconf
+
+ 
+
+  tasks:
+
+  - name: establish subscription
+
+    netconf_config:
+
+      content: |
+
+                    <config>
+                        <ap-cfg-data xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-wireless-ap-cfg">
+                            <ap-tags>
+                                <ap-tag>
+                                    <ap-mac>11:22:33:44:55:66</ap-mac>
+                                    <site-tag>Sydney</site-tag>
+                                </ap-tag>
+                            </ap-tags>
+                        </ap-cfg-data>
+                    </config>
