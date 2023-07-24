@@ -8,5 +8,5 @@
     - name: show module and ip interfaces brief
       ios_command:
         commands:
-            - show module
+            - show version
             - show ip interface brief
