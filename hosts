@@ -2,11 +2,11 @@
 192.168.10.223
  
 
-[ios-xe:children]
+[ios_xe:children]
 C9800
 
  
 
-[ios-xe:vars]
+[ios_xe:vars]
 ansible_connection=network_cli
 ansible_network_os=ios
