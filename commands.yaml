@@ -1,7 +1,7 @@
 ---
 
 - name: run commands on Cisco IOS XE devices
-  hosts: ios
+  hosts: ios_xe
   gather_facts: no
 
   tasks:
