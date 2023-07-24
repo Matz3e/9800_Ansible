@@ -16,4 +16,4 @@ C9800
 ansible_connection=netconf
 ansible_network_os=ios
 ansible_password=netconf
-ansible_python_interpreter = "/usr/bin/python3"
+ansible_python_interpreter = "/usr/bin/python"
