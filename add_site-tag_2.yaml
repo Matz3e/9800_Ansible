@@ -1,0 +1,12 @@
+---
+
+- name: run commands on Cisco IOS XE devices
+  hosts: ios_xe
+  gather_facts: no
+
+  tasks:
+    - name: show module and ip interfaces brief
+      ios_command:
+        commands:
+            - show version
+            - show ip interface brief
