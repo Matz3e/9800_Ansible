@@ -1,0 +1,22 @@
+- name : rftag
+  hosts: C9800
+  connection: netconf
+  gather_facts: no
+
+  tasks:
+    - name: rftag
+      netconf_config:
+        xml: |
+            <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+              <rf-cfg-data xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-wireless-rf-cfg">
+                <rf-tags>
+                  <rf-tag>
+                    <tag-name>Example</tag-name>
+                    <description>Hi-there</description>
+                    <dot11a-rf-profile-name>RF24</dot11a-rf-profile-name>
+                    <dot11b-rf-profile-name>RF5</dot11b-rf-profile-name>
+                    <dot11-6ghz-rf-prof-name>RF6</dot11-6ghz-rf-prof-name>
+                  </rf-tag>
+                </rf-tags>
+              </rf-cfg-data>
+            </config>
