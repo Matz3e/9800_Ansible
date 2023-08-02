@@ -7,7 +7,7 @@
   tasks:
     - name: configure sitetag
       cisco.ios.ios_config:
-        lines: wireless tag site "{{ sitetag_name }}"
+        lines: wireless tag site "ST_""{{ sitetag_name }}"
       register: config_output
       
     - name: print config_output
