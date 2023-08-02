@@ -6,7 +6,7 @@
   tasks:
     - name: sitetag
       netconf_config:
-      content: |
+        content: |
               <site-cfg-data xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-wireless-site-cfg">
                 <site-tag-configs>
                   <site-tag-config>
