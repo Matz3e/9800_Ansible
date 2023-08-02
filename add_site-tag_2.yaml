@@ -5,7 +5,7 @@
   gather_facts: no
 
   tasks:
-    - name: Show ip route output
+    - name: Show wireless tag site summary
       cisco.ios.ios_command:
         commands: show wireless tag site summary | i "{{ sitetag_name }}"
       register: sitetag_output
@@ -13,6 +13,6 @@
     - name: configure sitetag
       cisco.ios.ios_config:
         lines: wireless tag site "{{ sitetag_name }}"
-      when: sitetag_output is search("{{ sitetag_name }}")
+      when: sitetag_output is search != ("{{ sitetag_name }}")
 
 
