@@ -1,5 +1,5 @@
 - name : sitetag
-  hosts: MY_HOST_NAME
+  hosts: C9800
   connection: netconf
   gather_facts: no
 
