@@ -13,8 +13,6 @@
                   <site-tag-config>
                     <site-tag-name>Example</site-tag-name>
                     <description>Hi-there</description>
-                    <image-download-profile-name/>
-                    <dhcp-bcast/>
                   </site-tag-config>
                 </site-tag-configs>
               </site-cfg-data>
