@@ -8,7 +8,9 @@
     - name: configure sitetag
       cisco.ios.ios_config:
         lines: wireless tag site "{{ sitetag_name }}"
-        warn: false
+      args:
+        warn: false # THIS is the feature request -- the ability to disable the idempotency warning flag in a single task
+      when: check_value.find('some string') == -1
       register: config_output
       
     - name: print config_output
