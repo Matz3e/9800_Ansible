@@ -13,13 +13,10 @@ C9800
 #ansible_network_os=ios
 
 #NETCONF
-#ansible_connection=netconf
-#ansible_network_os=ios
+ansible_connection=netconf
+ansible_network_os=ios
+ansible_user=netconf
 ansible_password=netconf
 ansible_python_interpreter = "/usr/bin/python3"
 
-[iosxr:vars]
-ansible_connection=ansible.netcommon.network_cli
-ansible_network_os=cisco.iosxr.iosxr
-ansible_user=netconf
-#ansible_password=!vault...
+
