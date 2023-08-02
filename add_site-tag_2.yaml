@@ -8,4 +8,4 @@
     - name: add site tag to all WLCs
       ios_command:
         commands:
-            - wireless tag site "{{ sitetag_name }}"
+            - wireless tag site: "{{ sitetag_name }}"
