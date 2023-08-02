@@ -1,4 +1,5 @@
 ---
+#ansible-playbook add_site-tag.yaml -u USERNAME -k -e "sitetag_name=NAME"
 
 - name: run commands on Cisco IOS XE devices
   hosts: ios_xe
