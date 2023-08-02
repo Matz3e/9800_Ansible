@@ -13,12 +13,9 @@
     - name: configure sitetag
       cisco.ios.ios_config:
         lines: wireless tag site "{{ sitetag_name }}"
+      register: output
       when: sitetag_output is search != ("{{ sitetag_name }}")
-
-  register: output
-
+      
     - name: print output
       debug:
         var: output
-
-
