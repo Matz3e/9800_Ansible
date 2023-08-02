@@ -5,8 +5,7 @@
   gather_facts: no
 
   tasks:
-    - name: show module and ip interfaces brief
+    - name: add site tag to all WLCs
       ios_command:
         commands:
-            - show version
-            - show ip interface brief
+            - wireless tag site "{{ sitetag_name }}"
