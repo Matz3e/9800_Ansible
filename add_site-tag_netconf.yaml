@@ -5,8 +5,9 @@
 
   tasks:
     - name: sitetag
-      netconf_config:
-        content: |
+      netconf_get:
+        filter: |
+            <filter xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
               <site-cfg-data xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-wireless-site-cfg">
                 <site-tag-configs>
                   <site-tag-config>
@@ -17,3 +18,4 @@
                   </site-tag-config>
                 </site-tag-configs>
               </site-cfg-data>
+            </filter>
