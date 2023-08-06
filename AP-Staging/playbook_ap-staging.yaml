@@ -1,16 +1,12 @@
 - name: Configure using Local CSV
   hosts: C9800
   vars:
-    csv_file_path: "APs2Config.csv"  # Update this path to your local CSV file
+    csv_file_path: "/path/to/your/local/file.csv"  # Update this path to your local CSV file
 
   vars_prompt:
     - name: use_csv_input
       prompt: "Do you want to use a local CSV file as input? (yes/no)"
       private: no
-
-  vars:
-    apmacs: []
-    maclist: []
 
   tasks:
     - ios_command:
@@ -23,13 +19,13 @@
 
     - name: Load CSV content
       when: use_csv_input == "yes"
-      set_fact:
-        csv_content: "{{ lookup('file', csv_file_path) | from_csv }}"
+      command: python csv_parser.py "{{ csv_file_path }}"
+      register: csv_content
 
     - name: Define List from CSV
       when: use_csv_input == "yes"
       debug:
-        msg: "{{ csv_content }}"
+        var: csv_content.stdout_lines
 
     - name: Apply names based on Mac from CSV
       when: use_csv_input == "yes"
@@ -37,6 +33,6 @@
       ios_command:
         commands:
           - "ap name {{ item.defaultname }} name {{ item.name }}"
-      loop: "{{ csv_content }}"
+      loop: "{{ csv_content.stdout_lines }}"
       when:
         - item.skip == "0"
