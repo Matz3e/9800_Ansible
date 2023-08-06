@@ -1,7 +1,7 @@
 - name: Configure using Local CSV
   hosts: C9800
   vars:
-    csv_file_path: "/path/to/your/local/file.csv"  # Update this path to your local CSV file
+    csv_file_path: "APs2Config.csv"  # Update this path to your local CSV file
 
   vars_prompt:
     - name: use_csv_input
