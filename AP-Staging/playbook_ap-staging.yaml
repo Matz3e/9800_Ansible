@@ -35,12 +35,17 @@
     - name: Apply names based on Do from CSV
       when: use_csv_input == "yes"
       ignore_errors: true
+      loop: "{{ csv_content.stdout_lines }}"
+      vars:
+        do_value: "{{ item['do'] | string }}"
       ios_command:
         commands:
           - "ap name {{ item.defaultname }} name {{ item.name }}"
-      loop: "{{ csv_content.stdout_lines }}"
+      loop_control:
+        loop_var: item_csv
       when:
-        - item['do'] | string == "yes"
+        - do_value == "yes"
+
 
 
 
