@@ -1,1 +1,22 @@
+[C9800]
+192.168.10.223
+ 
+
+[ios_xe:children]
+C9800
+
+ 
+
+[ios_xe:vars]
+#SSH
+#ansible_connection=network_cli
+#ansible_network_os=ios
+
+#NETCONF
+ansible_connection=netconf
+ansible_network_os=ios
+ansible_user=netconf
+ansible_password=netconf
+ansible_python_interpreter = "/usr/bin/python3"
+
 
