@@ -35,4 +35,5 @@
           - "ap name {{ item.defaultname }} name {{ item.name }}"
       loop: "{{ csv_content.stdout_lines }}"
       when:
-        - item.skip == "0"
+        - item['skip'] == "0"
+
