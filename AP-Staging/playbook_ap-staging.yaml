@@ -19,7 +19,7 @@
 
     - name: Load CSV content
       when: use_csv_input == "yes"
-      command: python csv_parser.py "{{ csv_file_path }}"
+      command: python3 csv_parser.py "{{ csv_file_path }}"
       register: csv_content
 
     - name: Define List from CSV
