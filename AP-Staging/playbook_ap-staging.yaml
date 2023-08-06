@@ -5,11 +5,12 @@
     - name: should_enter_sheetid
       prompt: "Do you want to enter a Google Sheet ID?"
       private: no
+      default: "yes"  # Set the default value based on your condition
 
     - name: sheetid_input
       prompt: "What is the Google Sheet ID?"
       private: no
-      when: should_enter_sheetid | bool
+      when: should_enter_sheetid == "yes"
 
   vars:
     apmacs: []
