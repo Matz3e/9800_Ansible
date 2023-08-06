@@ -1,14 +1,7 @@
+---
 - name: Configure using Google Sheet
   hosts: C9800
   vars_prompt:
-
-- name: Enter Google Sheet ID and Fetch Data
-  hosts: your_target_hosts_here
-  vars:
-    apmacs: []
-    maclist: []
-   
-  tasks:
     - name: Check if sheetid is empty
       pause:
         prompt: "Do you want to enter a Google Sheet ID?"
@@ -24,31 +17,37 @@
       debug:
         var: sheetid_input.user_input
 
-    - name: Fetch JSON content
+  vars:
+    apmacs: []
+    maclist: []
+
+  tasks:
+    - ios_command:
+        commands:
+          - show version | i uptime
+      register: show
+
+    - debug: var=show.stdout_lines
+      # the above task is not necessary, just used to make sure I was connecting to the
+      # controller and thought I would display the uptime
+
+    - name: Download JSON content play
       uri:
-        url: "http://gsx2json.com/api?id={{ sheetid_input.user_input }}&columns=false"
+        url: http://gsx2json.com/api?id={{ sheetid_input.user_input }}&columns=false
         return_content: yes
       register: jsoncontent
 
-    # Add more tasks as needed for processing the fetched JSON content
-    # ...
+    - name: Define List
+      debug:
+        msg: "{{ jsoncontent.json | json_query(jmesquery) }}"
+      vars:
+        jmesquery: "[*].{number: number, name: name, fqdn: fqdn, mac: mac, ip: ip, host: host, subnet: subnet, mask: mask, gateway: gateway, skip: skip, parsedfordnslookup: parsedfordnslookup, parsedforcontroller: parsedforcontroller, defaultname: defaultname, primary: primary, primaryip: primaryip, secondary: secondary, secondaryip: secondaryip, ptag: ptag, rtag: rtag, stag: stag}"
 
-# Connects to the Google sheet based on Sheet ID. Remember to publish the 
-# sheet!
-
-   - name: Define List
-     debug: msg= "{{ jsoncontent.json | json_query(jmesquery) }}"
-     vars:
-             jmesquery: "[*].{number: number, name: name, fqdn: fqdn, mac: mac, ip: ip, host: host, subnet: subnet, mask: mask, gateway: gateway, skip: skip, parsedfordnslookup: parsedfordnslookup, parsedforcontroller: parsedforcontroller, defaultname: defaultname, primary: primary, primaryip: primaryip, secondary: secondary, secondaryip: secondaryip, ptag: ptag, rtag: rtag, stag: stag}"
-
-# Associates the information in the sheet with the column headers
-# Column headers eliminates spaces and return in lowercase   
-
-   - name: Apply names based on Mac
-     ignore_errors: True
-     ios_command:
-       commands:
-         - ap name {{item.defaultname}} name {{item.name}}
-     loop: "{{jsoncontent.json.rows}}"
-     when:
-       - item.skip == 0
+    - name: Apply names based on Mac
+      ignore_errors: True
+      ios_command:
+        commands:
+          - ap name {{ item.defaultname }} name {{ item.name }}
+      loop: "{{ jsoncontent.json.rows }}"
+      when:
+        - item.skip == 0
