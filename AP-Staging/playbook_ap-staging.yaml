@@ -1,9 +1,11 @@
----
-- name: Configure using Google Sheet
+- name: Configure using Local CSV
   hosts: C9800
+  vars:
+    csv_file_path: "/path/to/your/local/file.csv"  # Update this path to your local CSV file
+
   vars_prompt:
-    - name: sheetid_input
-      prompt: "Enter the Google Sheet ID (leave empty to skip)"
+    - name: use_csv_input
+      prompt: "Do you want to use a local CSV file as input? (yes/no)"
       private: no
 
   vars:
@@ -19,23 +21,22 @@
     - debug:
         var: show.stdout_lines
 
-    - name: Download JSON content play
-      uri:
-        url: "http://gsx2json.com/api?id={{ sheetid_input }}&columns=false"
-        return_content: yes
-      register: jsoncontent
+    - name: Load CSV content
+      when: use_csv_input == "yes"
+      set_fact:
+        csv_content: "{{ lookup('file', csv_file_path) | from_csv }}"
 
-    - name: Define List
+    - name: Define List from CSV
+      when: use_csv_input == "yes"
       debug:
-        msg: "{{ jsoncontent.json | json_query(jmesquery) }}"
-      vars:
-        jmesquery: "[*].{number: number, name: name, fqdn: fqdn, mac: mac, ip: ip, host: host, subnet: subnet, mask: mask, gateway: gateway, skip: skip, parsedfordnslookup: parsedfordnslookup, parsedforcontroller: parsedforcontroller, defaultname: defaultname, primary: primary, primaryip: primaryip, secondary: secondary, secondaryip: secondaryip, ptag: ptag, rtag: rtag, stag: stag}"
+        msg: "{{ csv_content }}"
 
-    - name: Apply names based on Mac
-      ignore_errors: True
+    - name: Apply names based on Mac from CSV
+      when: use_csv_input == "yes"
+      ignore_errors: true
       ios_command:
         commands:
           - "ap name {{ item.defaultname }} name {{ item.name }}"
-      loop: "{{ jsoncontent.json.rows }}"
+      loop: "{{ csv_content }}"
       when:
-        - item.skip == 0
+        - item.skip == "0"
