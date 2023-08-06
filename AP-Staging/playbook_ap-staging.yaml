@@ -27,7 +27,7 @@
       debug:
         var: csv_content.stdout_lines
 
-    - name: Apply names based on Mac from CSV
+    - name: Apply names based on Do from CSV
       when: use_csv_input == "yes"
       ignore_errors: true
       ios_command:
@@ -35,5 +35,6 @@
           - "ap name {{ item.defaultname }} name {{ item.name }}"
       loop: "{{ csv_content.stdout_lines }}"
       when:
-        - item['skip'] == "0"
+        - item['do'] == "yes"
+
 
