@@ -2,20 +2,14 @@
 - name: Configure using Google Sheet
   hosts: C9800
   vars_prompt:
-    - name: Check if sheetid is empty
-      pause:
-        prompt: "Do you want to enter a Google Sheet ID?"
-      register: should_enter_sheetid
+    - name: should_enter_sheetid
+      prompt: "Do you want to enter a Google Sheet ID?"
+      private: no
 
-    - name: Prompt for sheetid
-      when: should_enter_sheetid.user_input | bool
-      prompt:
-        "What is the Google Sheet ID?"
-      register: sheetid_input
-
-    - name: Display entered Sheet ID
-      debug:
-        var: sheetid_input.user_input
+    - name: sheetid_input
+      prompt: "What is the Google Sheet ID?"
+      private: no
+      when: should_enter_sheetid | bool
 
   vars:
     apmacs: []
@@ -27,13 +21,14 @@
           - show version | i uptime
       register: show
 
-    - debug: var=show.stdout_lines
+    - debug:
+        var: show.stdout_lines
       # the above task is not necessary, just used to make sure I was connecting to the
       # controller and thought I would display the uptime
 
     - name: Download JSON content play
       uri:
-        url: http://gsx2json.com/api?id={{ sheetid_input.user_input }}&columns=false
+        url: "http://gsx2json.com/api?id={{ sheetid_input }}&columns=false"
         return_content: yes
       register: jsoncontent
 
@@ -47,7 +42,7 @@
       ignore_errors: True
       ios_command:
         commands:
-          - ap name {{ item.defaultname }} name {{ item.name }}
+          - "ap name {{ item.defaultname }} name {{ item.name }}"
       loop: "{{ jsoncontent.json.rows }}"
       when:
         - item.skip == 0
