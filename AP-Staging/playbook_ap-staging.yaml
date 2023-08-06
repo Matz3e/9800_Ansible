@@ -2,39 +2,36 @@
   hosts: C9800
   vars_prompt:
 
-- name: Check if sheetid is empty
-  pause:
-    prompt: "Do you want to enter a Google Sheet ID?"
-  register: should_enter_sheetid
-
-- name: Prompt for sheetid
-  when: should_enter_sheetid.user_input | bool
-  prompt:
-    "What is the Google Sheet ID?"
-  register: sheetid_input
-
-- name: Display entered Sheet ID
-  debug:
-    var: sheetid_input.user_input
-
-
+- name: Enter Google Sheet ID and Fetch Data
+  hosts: your_target_hosts_here
   vars:
     apmacs: []
     maclist: []
    
   tasks:
-   - ios_command:
-       commands:
-        - show version | i uptime
-     register: show
-   - debug: var=show.stdout_lines
-# the above task is not necessary just used to make sure I was connecting to the # controller and thought I would display the uptime
-   - name: Download JSON content play
-     uri:
-       url: http://gsx2json.com/api?id={{sheetid_input.user_input}}&columns=false
+    - name: Check if sheetid is empty
+      pause:
+        prompt: "Do you want to enter a Google Sheet ID?"
+      register: should_enter_sheetid
 
-       return_content: yes
-     register: jsoncontent
+    - name: Prompt for sheetid
+      when: should_enter_sheetid.user_input | bool
+      prompt:
+        "What is the Google Sheet ID?"
+      register: sheetid_input
+
+    - name: Display entered Sheet ID
+      debug:
+        var: sheetid_input.user_input
+
+    - name: Fetch JSON content
+      uri:
+        url: "http://gsx2json.com/api?id={{ sheetid_input.user_input }}&columns=false"
+        return_content: yes
+      register: jsoncontent
+
+    # Add more tasks as needed for processing the fetched JSON content
+    # ...
 
 # Connects to the Google sheet based on Sheet ID. Remember to publish the 
 # sheet!
