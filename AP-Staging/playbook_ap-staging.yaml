@@ -27,6 +27,11 @@
       debug:
         var: csv_content.stdout_lines
 
+    - name: Debug CSV Content Element
+      debug:
+        var: csv_content.stdout_lines[0]
+
+
     - name: Apply names based on Do from CSV
       when: use_csv_input == "yes"
       ignore_errors: true
