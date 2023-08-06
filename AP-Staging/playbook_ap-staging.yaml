@@ -40,6 +40,7 @@
           - "ap name {{ item.defaultname }} name {{ item.name }}"
       loop: "{{ csv_content.stdout_lines }}"
       when:
-        - item['do'] == "yes"
+        - item['do'] | string == "yes"
+
 
 
