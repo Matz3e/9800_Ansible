@@ -2,10 +2,21 @@
   hosts: C9800
   vars_prompt:
 
-  - name: sheetid
-    prompt: " What is the Google Sheet ID ? "
-    private: no
-    when: sheetid == ""
+- name: Check if sheetid is empty
+  pause:
+    prompt: "Do you want to enter a Google Sheet ID?"
+  register: should_enter_sheetid
+
+- name: Prompt for sheetid
+  when: should_enter_sheetid.user_input | bool
+  prompt:
+    "What is the Google Sheet ID?"
+  register: sheetid_input
+
+- name: Display entered Sheet ID
+  debug:
+    var: sheetid_input.user_input
+
 
   vars:
     apmacs: []
@@ -20,7 +31,7 @@
 # the above task is not necessary just used to make sure I was connecting to the # controller and thought I would display the uptime
    - name: Download JSON content play
      uri:
-       url: http://gsx2json.com/api?id={{sheetid}}&columns=false
+       url: http://gsx2json.com/api?id={{sheetid_input.user_input}}&columns=false
 
        return_content: yes
      register: jsoncontent
