@@ -2,15 +2,9 @@
 - name: Configure using Google Sheet
   hosts: C9800
   vars_prompt:
-    - name: prompt_for_sheetid
-      prompt: "Do you want to enter a Google Sheet ID? (yes/no)"
-      private: no
-      default: "yes"
-
     - name: sheetid_input
-      prompt: "What is the Google Sheet ID?"
+      prompt: "Enter the Google Sheet ID (leave empty to skip)"
       private: no
-      when: prompt_for_sheetid == "yes"
 
   vars:
     apmacs: []
