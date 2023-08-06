@@ -1,2 +1,0 @@
-Number,Name,FQDN,Mac,IP,Host,Subnet,Mask,Gateway,skip,Parsed for DNS Lookup,,Parsed for Controller,DefaultName,Primary,primaryip,Secondary,secondaryip,ptag,rtag,stag
-1,max101-a,max101-a.ap.nd.edu,24169DDA0D17,172.17.231.168,168,172.17.231,255.255.252.0,172.17.231.1,,24:16:9D:DA:0D:17,,2416.9dda.0d17,AP2416-9DDA-0D17,9800Controller-a,172.26.225.200,9800Controller-b,172.26.225.201,HghDensity,HighDensity,max
