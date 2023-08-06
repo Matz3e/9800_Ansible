@@ -2,15 +2,15 @@
 - name: Configure using Google Sheet
   hosts: C9800
   vars_prompt:
-    - name: should_enter_sheetid
-      prompt: "Do you want to enter a Google Sheet ID?"
+    - name: prompt_for_sheetid
+      prompt: "Do you want to enter a Google Sheet ID? (yes/no)"
       private: no
-      default: "yes"  # Set the default value based on your condition
+      default: "yes"
 
     - name: sheetid_input
       prompt: "What is the Google Sheet ID?"
       private: no
-      when: should_enter_sheetid == "yes"
+      when: prompt_for_sheetid == "yes"
 
   vars:
     apmacs: []
@@ -24,8 +24,6 @@
 
     - debug:
         var: show.stdout_lines
-      # the above task is not necessary, just used to make sure I was connecting to the
-      # controller and thought I would display the uptime
 
     - name: Download JSON content play
       uri:
